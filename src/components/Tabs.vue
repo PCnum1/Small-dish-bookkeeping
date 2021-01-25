@@ -1,7 +1,9 @@
 <template>
     <div>
-        <ul class="tabs">
+        <ul class="tabs" :class="{[classPrefix+'-tabs']:classPrefix}">
             <li v-for="item in dataSource" :key="item.value" 
+            :style="{height: height}"
+            class="tabs-item"
             :class="liClass(item)"
             @click="select(item)">{{item.text}}</li>
         </ul>
@@ -17,10 +19,14 @@ type DataSourceItem = {text: string;value: string}
         @Prop({required:true,type:Array}) dataSource!: DataSourceItem[];
         @Prop(String) readonly value!: string;
         @Prop(String) classPrefix?: string; 
+        @Prop({type: String,default: '64px'}) height!: string;
         liClass(item: DataSourceItem){
            return {[this.classPrefix + '-tabs-item'] : this.classPrefix,selected:item.value === this.value}
         }
         select(item: DataSourceItem){
+            // if(item.value !== '-' && item.value !== '+'){
+            //     throw new Error('type is unknow')
+            // }
             this.$emit('update:value',item.value);
         }
     }
@@ -32,13 +38,13 @@ type DataSourceItem = {text: string;value: string}
     background: #c4c4c4;
     text-align: center;
     font-size: 24px;
-    > li{
+    &-item{
         width: 50%;
+        display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
-        line-height: 64px;
-        height: 64px;
+        // height: 64px;
         &.selected::after{
             content: '';
             position: absolute;
