@@ -44,7 +44,6 @@ type DataSourceItem = {text: string;value: string}
         justify-content: center;
         align-items: center;
         position: relative;
-        // height: 64px;
         &.selected::after{
             content: '';
             position: absolute;
